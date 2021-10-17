@@ -1,6 +1,7 @@
 pragma ton-solidity >= 0.35.0;
 pragma AbiHeader expire;
 
+
 contract TaskList {
 
     struct task {
@@ -13,6 +14,7 @@ contract TaskList {
     uint8 task_ids_cnt;
     mapping (uint8=>task) task_ids;
 
+//super duper default constructor
     constructor() public {
         // Check that contract's public key is set
         require(tvm.pubkey() != 0, 101);
@@ -25,7 +27,7 @@ contract TaskList {
         tvm.accept();
     }
 
-
+//worked in tests, returns id
     function add_task(string _name) public returns(uint8) {
         uint8 task_id = task_ids_cnt++;
         task t = task_ids[task_id];
@@ -34,6 +36,8 @@ contract TaskList {
         tvm.accept();
         return task_id;
     }
+
+    //bug within these 2 functions, no name stored or displayed
 
     function veiw_tasks() public view returns(string[]) {
         string[] all_tasks;
@@ -44,7 +48,7 @@ contract TaskList {
         tvm.accept();
     }
 
-
+//tested, returns quantity of undone
     function get_undone() public returns (uint) {
         string[] undones;
         for(uint8 i = 0; i < task_ids_cnt; i++){
@@ -67,6 +71,7 @@ contract TaskList {
         tvm.accept();
     }
 
+//sets done to true, test passed
     function ncmark_as_compl(uint8 _key) public {
         task_ids[_key].done = true;
         tvm.accept();
