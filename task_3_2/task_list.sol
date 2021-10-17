@@ -13,6 +13,7 @@ contract TaskList {
 
     uint8 task_ids_cnt;
     mapping (uint8=>task) task_ids;
+    string[] public tsk_descrptns;
 
 //super duper default constructor
     constructor() public {
@@ -30,8 +31,9 @@ contract TaskList {
 //worked in tests, returns id
     function add_task(string _name) public returns(uint8) {
         uint8 task_id = task_ids_cnt++;
-        task t = task_ids[task_id];
+        task t = task_ids[task_id];//because assigned before setted properties?
         t.name = _name;
+        tsk_descrptns.push(_name);//working this way, abusing w/o fixing method in 
         t.added_at = now;
         tvm.accept();
         return task_id;
@@ -47,6 +49,8 @@ contract TaskList {
         return all_tasks;
         tvm.accept();
     }
+
+
 
 //tested, returns quantity of undone
     function get_undone() public returns (uint) {
@@ -66,10 +70,14 @@ contract TaskList {
         tvm.accept();
     }
 
-    function get_descr(uint8 _key) public view returns (string) {
-        return task_ids[_key].name;
-        tvm.accept();
+    function get_dscr_wk(uint8 _k) public returns(string) {
+        return tsk_descrptns[_k];
     }
+
+    // function get_descr(uint8 _key) public view returns (string) {
+    //     return task_ids[_key].name;
+    //     tvm.accept();
+    // }
 
 //sets done to true, test passed
     function ncmark_as_compl(uint8 _key) public {
