@@ -38,7 +38,7 @@ contract TaskList {
     function get_undone() public returns (string[]) {
         string[] undones;
         for(uint8 i = 0; i < taskIds; i++){
-            if(task_ids[i].done == true){
+            if(task_ids[i].done != true){
                 undones.push(task_ids[i].name);
             }
         }
