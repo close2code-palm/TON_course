@@ -10,7 +10,7 @@ contract TaskList {
     }
 
 
-    uint8 taskIds;
+    uint8 task_ids_cnt;
     mapping (uint8=>task) task_ids;
 
     constructor() public {
@@ -26,23 +26,34 @@ contract TaskList {
     }
 
 
-    function add_task(string _name) public {
-        uint8 task_id = taskIds++;
+    function add_task(string _name) public returns(uint8) {
+        uint8 task_id = task_ids_cnt++;
         task t = task_ids[task_id];
         t.name = _name;
         t.added_at = now;
         tvm.accept();
+        return task_id;
+    }
+
+    function veiw_tasks() public view returns(string[]) {
+        string[] all_tasks;
+        for(uint8 i = 0; i <= task_ids_cnt; i++){
+            all_tasks.push(task_ids[i].name);
+        }
+        return all_tasks;
+        tvm.accept();
     }
 
 
-    function get_undone() public returns (string[]) {
+    function get_undone() public returns (uint) {
         string[] undones;
-        for(uint8 i = 0; i < taskIds; i++){
+        for(uint8 i = 0; i < task_ids_cnt; i++){
             if(task_ids[i].done != true){
                 undones.push(task_ids[i].name);
             }
         }
-        return undones;
+        return undones.length;
+        tvm.accept();
     }
 
 
