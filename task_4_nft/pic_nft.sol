@@ -8,7 +8,7 @@ contract Artisty {
         string name;
         bytes code;
         string[] meaning;
-        address owner;
+        address creator;
     }
     
     uint8 id_cnt;
@@ -32,8 +32,15 @@ contract Artisty {
         pic_collection.push(PicNFT(n_id ,_name, _code, _descrtn, msg.sender));
     }
 
-    function put_up_for_sale(uint8 _id, uint price) public {
-        require (pic_collection[_id].owner == msg.sender, 102, "Only owner can announce sales.");
-        on_sale[pic_collection[_id].name] = price;
+    modifier only_creator(uint8 _id) {
+        if (pic_collection[_id].creator == msg.sender) {
+            _;
+        }
+    }
+
+    //uint8 id; //fixed smart completion error by declaring outside
+    function put_up_for_sale(uint8 id, uint price) 
+    public only_creator(id) {
+        on_sale[pic_collection[id].name] = price;
     }
 }
