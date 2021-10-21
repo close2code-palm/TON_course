@@ -27,6 +27,7 @@ contract Artisty {
 
     function create_nft(string _name, bytes _code, 
     string[] _descrtn) public {
+        tvm.accept();
         require(isUnique(_name), 101, "NFT with this name allready exists.");
         uint8 n_id = id_cnt++;
         pic_collection.push(PicNFT(n_id ,_name, _code, _descrtn, msg.sender));
