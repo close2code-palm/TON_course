@@ -28,6 +28,13 @@ contract TaskList {
         tvm.accept();
     }
 
+
+    function add_task_by_name(string _name) public {
+        uint8 t_id = task_ids_cnt++;
+        task tsk = task(_name, false, now);
+        task_ids[t_id] = tsk;
+        tvm.accept();
+    }
 //worked in tests, returns id
     function add_task(string _name) public returns(uint8) {
         uint8 task_id = task_ids_cnt++;
@@ -53,7 +60,7 @@ contract TaskList {
 
 
 //tested, returns quantity of undone
-    function get_undone() public returns (uint) {
+    function get_undone() public view returns (uint) {
         string[] undones;
         for(uint8 i = 0; i < task_ids_cnt; i++){
             if(task_ids[i].done != true){
@@ -71,7 +78,7 @@ contract TaskList {
     }
 
     function get_dscr_wk(uint8 _k) public returns(string) {
-        return tsk_descrptns[_k];
+        return task_ids[_k].name;
     }
 
     // function get_descr(uint8 _key) public view returns (string) {
