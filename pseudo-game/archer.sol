@@ -1,7 +1,7 @@
 pragma ton-solidity >= 0.35.0;
 pragma AbiHeader expire;
 
-import "./oop_realisation.sol";
+import "./combatUnit.sol";
 
 
 contract Archer is CombatUnit(msg.sender) {
@@ -17,8 +17,12 @@ contract Archer is CombatUnit(msg.sender) {
         baseAr.addArcher();
     }
 
-    function getAttack() pure public returns (uint8 attackPower) {
+    function getAttack() pure public override returns (uint8 attackPower) {
         return 25;
+    }
+
+    function getDefense() pure override public returns (uint8) {
+        return 6;
     }
     // atck  attack = 25;
     // defense = 10;

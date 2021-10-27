@@ -1,7 +1,7 @@
 pragma ton-solidity >= 0.35.0;
 pragma AbiHeader expire;
 
-import "./oop_realisation.sol";
+import "./combatUnit.sol";
 
 
 contract Warrior is CombatUnit(msg.sender) {
@@ -13,7 +13,7 @@ contract Warrior is CombatUnit(msg.sender) {
         baseWr.addWarrior();
     }
 
-    function getAttack() public pure returns (uint8 attackPower) {
+    function getAttack() public pure override returns (uint8 attackPower) {
         return 30;
     } 
 }
