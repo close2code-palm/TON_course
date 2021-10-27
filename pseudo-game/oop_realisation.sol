@@ -43,11 +43,29 @@ contract BaseStation is GameObject {
 
     address[] private static units;
     
-// explicitly calling for different types of units
-    function addUnit(string unType) external {
-        CombatUnit combatUnit = new CombatUnit(this, unType);
-        address  unitAddress = payable(combatUnit);
-        units.push(unitAddress);
+// // explicitly calling for different types of units
+//     function addUnit(string unType) external {
+//         if (unType == "Archer") {
+//             Archer unitGuy = new Archer();
+//         } else {
+//             Warrior unit = new Warrior();
+//         }
+//         // CombatUnit combatUnit = new CombatUnit(this, unType);
+//         address unitAddress = address(unit);
+//         address  unitAddressPay = payable(unitAddress);
+//         units.push(unitAddressPay);
+//     }
+
+    function addArcher() external {
+        Archer archer = new Archer();
+        address archPay = payable(archer);
+        units.push(archPay);
+    }
+
+    function addWarior() external {
+        Warrior warrior = new Warrior();
+        address warPay =payable(warrior);
+        units.push(warPay);
     }
 
     function defeat(address _winner) private {
@@ -69,15 +87,14 @@ contract BaseStation is GameObject {
 }
 
 
-contract CombatUnit is GameObject {
+abstract contract CombatUnit is GameObject {
 
     address private baseStationAddress;
     uint8 internal attack;
 
     // event Defeated(address _killed_by);
 
-    constructor(BaseStation baseSt, string _type) public {
-        baseSt.addUnit(_type);
+    constructor(BaseStation baseSt) public {
         baseStationAddress = address(baseSt);
     }
 
@@ -99,7 +116,10 @@ contract Archer is CombatUnit {
 
     uint8 lifeCells = 30;
 
-    constructor() CombatUnit(BaseStation) public {    }
+    constructor() //CombatUnit(BaseStationa 
+    public {    
+
+    }
 
     function getAttack() pure public returns (uint8 attackPower) {
         return 25;
