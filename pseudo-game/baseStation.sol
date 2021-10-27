@@ -3,6 +3,9 @@ pragma AbiHeader expire;
 
 import "./gameObject.sol";
 
+import './archer.sol';
+import './warrior.sol';
+
 
 contract BaseStation is GameObject {
 
@@ -25,7 +28,7 @@ contract BaseStation is GameObject {
     }
 
     function defeat(address _winner) private {
-        for (uint7 i = 0; i < units.length; i++) {
+        for (uint8 i = 0; i < units.length; i++) {
             CombatUnit(units[i]).death(_winner);
         }
         death(_winner);
@@ -36,7 +39,7 @@ contract BaseStation is GameObject {
     public
     view 
     override
-    returns(uint7 defense_power) {
+    returns(uint8 defense_power) {
         return defense_power;
     }
 

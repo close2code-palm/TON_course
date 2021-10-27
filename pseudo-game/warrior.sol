@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.35.0;
+pragma ton-solidity >= 0.5.0;
 pragma AbiHeader expire;
 
 import "./combatUnit.sol";
