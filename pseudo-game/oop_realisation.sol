@@ -55,6 +55,7 @@ contract BaseStation is GameObject {
 //         address  unitAddressPay = payable(unitAddress);
 //         units.push(unitAddressPay);
 //     }
+// failed polymorphism
 
     function addArcher() external {
         Archer archer = new Archer();
@@ -62,7 +63,7 @@ contract BaseStation is GameObject {
         units.push(archPay);
     }
 
-    function addWarior() external {
+    function addWarrior() external {
         Warrior warrior = new Warrior();
         address warPay =payable(warrior);
         units.push(warPay);
@@ -89,21 +90,21 @@ contract BaseStation is GameObject {
 
 abstract contract CombatUnit is GameObject {
 
-    address private baseStationAddress;
+    address internal baseStationAddress;
     uint8 internal attack;
 
     // event Defeated(address _killed_by);
 
-    constructor(BaseStation baseSt) public {
-        baseStationAddress = address(baseSt);
+    constructor(address baseSt) public {
+        baseStationAddress = baseSt;
     }
 
-    modifier baseCommands {
+    modifier commandsFromBase {
         require(msg.sender == baseStationAddress, 101, "Only my basestation can command");
         _;
     }
 
-    function death(address name) baseCommands override public {    }
+    function death(address name) commandsFromBase override public {    }
 
     // function getAttack(address _target) internal {
     //     _target.underAttack(attack);
@@ -112,13 +113,17 @@ abstract contract CombatUnit is GameObject {
 }
 
 
-contract Archer is CombatUnit {
+contract Archer is CombatUnit(msg.sender) {
 
     uint8 lifeCells = 30;
 
-    constructor() //CombatUnit(BaseStationa 
+    constructor()
+    override //CombatUnit(BaseStationa 
     public {    
-
+        // addArcher();
+        // baseStationAddress.call(bytes4(keccak256("addArcher")));
+        BaseStation baseAr = BaseStation(msg.sender);
+        baseAr.addArcher();
     }
 
     function getAttack() pure public returns (uint8 attackPower) {
@@ -130,11 +135,14 @@ contract Archer is CombatUnit {
 }
 
 
-contract Warrior is CombatUnit {
+contract Warrior is CombatUnit(msg.sender) {
 
-    uint8 lifecells = 4;
+    uint8 lifeCells = 40;
 
-    constructor() CombatUnit(BaseStation) public {    }
+    constructor() override public {  
+        BaseStation baseWr = BaseStation(msg.sender);
+        baseWr.addWarrior();
+    }
 
     function getAttack() public pure returns (uint8 attackPower) {
         return 30;
