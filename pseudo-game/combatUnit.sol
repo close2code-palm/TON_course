@@ -10,7 +10,7 @@ abstract contract CombatUnit is GameObject {
 
     // event Defeated(address _killed_by);
 
-    constructor(address baseSt) payable public {
+    constructor(address baseSt) public {
         baseStationAddress = baseSt;
     }
 

@@ -8,13 +8,13 @@ import './baseStation.sol';
 contract Warrior is CombatUnit(msg.sender) {
 
     constructor() override public { 
-        defense = 11;
+        attack = 30;
         lifeCells = 40; 
         BaseStation baseWr = BaseStation(msg.sender);
         baseWr.addUnit(this);
     }
 
-    function getAttack() public pure override returns (uint8 attackPower) {
-        return 30;
+    function getAttack() public view override returns (uint8 attackPower) {
+        return attack;
     } 
 }

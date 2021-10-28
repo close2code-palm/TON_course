@@ -2,10 +2,10 @@ pragma ton-solidity >= 0.5.0;
 pragma AbiHeader expire;
 
 import "./gameObject.sol";
+import './combatUnit.sol';
 
-import './archer.sol';
-import './warrior.sol';
-
+// import './archer.sol';
+// import './warrior.sol';
 
 contract BaseStation is GameObject {
 
@@ -15,9 +15,9 @@ contract BaseStation is GameObject {
         
     }
     
-    function addFighter(CombatUnit _name) public {
+    function addUnit(CombatUnit _name) public {
         address unitAdd = address(_name);
-        units.push(unitAdd)
+        units.push(unitAdd);
     }
 
     // function addArcher() external {

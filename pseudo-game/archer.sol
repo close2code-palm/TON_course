@@ -10,14 +10,15 @@ contract Archer is CombatUnit(msg.sender) {
     constructor()
     override //CombatUnit(BaseStationa 
     public {    
+        attack = 25;
         lifeCells = 30;
         // baseStationAddress.call(bytes4(keccak256("addArcher")));
         BaseStation baseAr = BaseStation(msg.sender);
         baseAr.addUnit(this);
     }
 
-    function getAttack() pure public override returns (uint8 attackPower) {
-        return 25;
+    function getAttack() view public override returns (uint8 attackPower) {
+        return attack;
     }
 
     function getDefense() pure override public returns (uint8) {
