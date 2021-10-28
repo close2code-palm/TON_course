@@ -5,12 +5,14 @@ import "./combatUnit.sol";
 import './baseStation.sol';
 
 
-contract Warrior is CombatUnit(msg.sender) {
+contract Warrior is CombatUnit {
 
-    constructor() override public { 
+    constructor(address baseSide) 
+    override 
+    public { 
         attack = 30;
         lifeCells = 40; 
-        BaseStation baseWr = BaseStation(msg.sender);
+        BaseStation baseWr = BaseStation(baseSide);
         baseWr.addUnit(this);
     }
 

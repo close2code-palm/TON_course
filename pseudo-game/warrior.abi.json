@@ -6,6 +6,7 @@
 		{
 			"name": "constructor",
 			"inputs": [
+				{"name":"baseSide","type":"address"}
 			],
 			"outputs": [
 			]

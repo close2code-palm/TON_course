@@ -5,15 +5,14 @@ import "./combatUnit.sol";
 import './baseStation.sol';
 
 
-contract Archer is CombatUnit(msg.sender) {
+contract Archer is CombatUnit {
 
-    constructor()
-    override //CombatUnit(BaseStationa 
+    constructor(address baseSide)
+    override // CombatUnit(address baseC)
     public {    
         attack = 25;
         lifeCells = 30;
-        // baseStationAddress.call(bytes4(keccak256("addArcher")));
-        BaseStation baseAr = BaseStation(msg.sender);
+        BaseStation baseAr = BaseStation(baseSide);
         baseAr.addUnit(this);
     }
 

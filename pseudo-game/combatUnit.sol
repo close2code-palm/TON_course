@@ -8,11 +8,9 @@ abstract contract CombatUnit is GameObject {
     address internal baseStationAddress;
     uint8 internal attack;
 
-    // event Defeated(address _killed_by);
-
-    constructor(address baseSt) public {
-        baseStationAddress = baseSt;
-    }
+    // constructor(address baseSt) public {
+    //     baseStationAddress = baseSt;
+    // }
 
     modifier commandsFromBase {
         require(msg.sender == baseStationAddress, 
