@@ -1,0 +1,58 @@
+{
+	"ABI version": 2,
+	"version": "2.2",
+	"header": ["time", "expire"],
+	"functions": [
+		{
+			"name": "constructor",
+			"inputs": [
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getAttack",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"attackPower","type":"uint8"}
+			]
+		},
+		{
+			"name": "death",
+			"inputs": [
+				{"name":"name","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "getDefense",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"def","type":"uint8"}
+			]
+		},
+		{
+			"name": "underAttack",
+			"inputs": [
+				{"name":"damage","type":"uint8"}
+			],
+			"outputs": [
+			]
+		}
+	],
+	"data": [
+	],
+	"events": [
+	],
+	"fields": [
+		{"name":"_pubkey","type":"uint256"},
+		{"name":"_timestamp","type":"uint64"},
+		{"name":"_constructorFlag","type":"bool"},
+		{"name":"lifeCells","type":"uint8"},
+		{"name":"baseStationAddress","type":"address"},
+		{"name":"attack","type":"uint8"}
+	]
+}

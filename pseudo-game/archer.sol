@@ -21,7 +21,7 @@ contract Archer is CombatUnit(msg.sender) {
         return attack;
     }
 
-    function getDefense() pure override public returns (uint8) {
-        return 6;
-    }
+    // function getDefense() pure override public returns (uint8) {
+    //     return 6;
+    // }
 }
