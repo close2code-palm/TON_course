@@ -10,7 +10,7 @@ abstract contract CombatUnit is GameObject {
 
     // event Defeated(address _killed_by);
 
-    constructor(address baseSt) public {
+    constructor(address baseSt) payable public {
         baseStationAddress = baseSt;
     }
 
@@ -27,9 +27,8 @@ abstract contract CombatUnit is GameObject {
     function death(address name) commandsFromBase override public {    }
 
     function doAttack(address _target) internal {
-        CombatUnit target = new CombatUnit(_target);
-        // should get attak from getter
-        target.underAttack();
+        CombatUnit target = CombatUnit(_target);
+        target.underAttack(getAttack());
     }
 
 }

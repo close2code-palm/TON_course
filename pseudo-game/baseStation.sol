@@ -15,17 +15,22 @@ contract BaseStation is GameObject {
         
     }
     
-    function addArcher() external {
-        Archer archer = new Archer();
-        address archPay = payable(archer);
-        units.push(archPay);
+    function addFighter(CombatUnit _name) public {
+        address unitAdd = address(_name);
+        units.push(unitAdd)
     }
 
-    function addWarrior() external {
-        Warrior warrior = new Warrior();
-        address warPay =payable(warrior);
-        units.push(warPay);
-    }
+    // function addArcher() external {
+    //     Archer archer = new Archer();
+    //     address archPay = payable(archer);
+    //     units.push(archPay);
+    // }
+
+    // function addWarrior() external {
+    //     Warrior warrior = new Warrior();
+    //     address warPay =payable(warrior);
+    //     units.push(warPay);
+    // }
 
     function defeat(address _winner) private {
         for (uint8 i = 0; i < units.length; i++) {
