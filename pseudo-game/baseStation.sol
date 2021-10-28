@@ -11,10 +11,6 @@ contract BaseStation is GameObject {
 
     address[] private units;
 
-    constructor() public {
-        
-    }
-    
     function addUnit(CombatUnit _name) public {
         address unitAdd = address(_name);
         units.push(unitAdd);

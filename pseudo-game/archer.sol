@@ -14,6 +14,7 @@ contract Archer is CombatUnit {
         lifeCells = 30;
         BaseStation baseAr = BaseStation(baseSide);
         baseAr.addUnit(this);
+        tvm.accept();
     }
 
     function getAttack() view public override returns (uint8 attackPower) {

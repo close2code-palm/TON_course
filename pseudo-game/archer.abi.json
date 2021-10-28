@@ -28,6 +28,14 @@
 			]
 		},
 		{
+			"name": "doAttack",
+			"inputs": [
+				{"name":"_target","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "getDefense",
 			"inputs": [
 			],
@@ -62,7 +70,7 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"lifeCells","type":"uint8"},
+		{"name":"lifeCells","type":"uint16"},
 		{"name":"baseStationAddress","type":"address"},
 		{"name":"attack","type":"uint8"}
 	]

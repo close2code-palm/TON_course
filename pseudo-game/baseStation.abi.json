@@ -4,13 +4,6 @@
 	"header": ["time", "expire"],
 	"functions": [
 		{
-			"name": "constructor",
-			"inputs": [
-			],
-			"outputs": [
-			]
-		},
-		{
 			"name": "addUnit",
 			"inputs": [
 				{"name":"_name","type":"address"}
@@ -46,6 +39,13 @@
 			"name": "underAttack",
 			"inputs": [
 				{"name":"damage","type":"uint8"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "constructor",
+			"inputs": [
 			],
 			"outputs": [
 			]

@@ -14,6 +14,7 @@ contract Warrior is CombatUnit {
         lifeCells = 40; 
         BaseStation baseWr = BaseStation(baseSide);
         baseWr.addUnit(this);
+        tvm.accept();
     }
 
     function getAttack() public view override returns (uint8 attackPower) {

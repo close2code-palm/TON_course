@@ -25,7 +25,7 @@ abstract contract CombatUnit is GameObject {
 
     function death(address name) commandsFromBase override public {    }
 
-    function doAttack(address _target) internal {
+    function doAttack(address _target) public virtual {
         CombatUnit target = CombatUnit(_target);
         target.underAttack(getAttack());
     }

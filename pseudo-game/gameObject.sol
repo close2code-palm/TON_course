@@ -5,7 +5,7 @@ import "./GameObjectInterface.sol";
 
 abstract contract GameObject is GameObjectInterface {
 
-    uint8 internal lifeCells = 50;
+    uint16 internal lifeCells = 50;
     uint8 constant internal defense_power = 17;
 
     event LoseOne(address owned, address eliminator, uint reward);
@@ -19,14 +19,20 @@ abstract contract GameObject is GameObjectInterface {
     }
     
     function underAttack(uint8 damage) external override {
-        uint8 effectiveDamage = damage - getDefense();
+        uint16 effectiveDamage;
+        if (damage > getDefense()) {
+            effectiveDamage = uint16(damage - getDefense());
+        } else {
+            effectiveDamage = 0;
+        }
         lifeCells -= effectiveDamage;
         isKilled(msg.sender);
     }
 
     function isKilled(address _by) internal {
-        if (lifeCells <= 0)
+        if (lifeCells <= 0) {
             death(_by);
+        }
     }
 
     function death(address _killed_by) public virtual {
