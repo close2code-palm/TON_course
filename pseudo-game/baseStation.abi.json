@@ -19,6 +19,22 @@
 			]
 		},
 		{
+			"name": "removeUnit",
+			"inputs": [
+				{"name":"_dead","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
+			"name": "death",
+			"inputs": [
+				{"name":"_winner","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "getDefense",
 			"inputs": [
 			],
@@ -33,20 +49,21 @@
 			],
 			"outputs": [
 			]
-		},
+		}
+	],
+	"data": [
+	],
+	"events": [
 		{
-			"name": "death",
+			"name": "LoseOne",
 			"inputs": [
-				{"name":"_killed_by","type":"address"}
+				{"name":"owned","type":"address"},
+				{"name":"eliminator","type":"address"},
+				{"name":"reward","type":"uint256"}
 			],
 			"outputs": [
 			]
 		}
-	],
-	"data": [
-		{"key":1,"name":"units","type":"address[]"}
-	],
-	"events": [
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},

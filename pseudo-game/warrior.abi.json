@@ -46,6 +46,16 @@
 	"data": [
 	],
 	"events": [
+		{
+			"name": "LoseOne",
+			"inputs": [
+				{"name":"owned","type":"address"},
+				{"name":"eliminator","type":"address"},
+				{"name":"reward","type":"uint256"}
+			],
+			"outputs": [
+			]
+		}
 	],
 	"fields": [
 		{"name":"_pubkey","type":"uint256"},

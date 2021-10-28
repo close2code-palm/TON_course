@@ -15,7 +15,8 @@ abstract contract CombatUnit is GameObject {
     }
 
     modifier commandsFromBase {
-        require(msg.sender == baseStationAddress, 101, 
+        require(msg.sender == baseStationAddress, 
+        101, 
         "Only my basestation can command");
         _;
     }

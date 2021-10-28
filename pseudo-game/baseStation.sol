@@ -9,7 +9,7 @@ import './combatUnit.sol';
 
 contract BaseStation is GameObject {
 
-    address[] private static units;
+    address[] private units;
 
     constructor() public {
         
@@ -20,20 +20,17 @@ contract BaseStation is GameObject {
         units.push(unitAdd);
     }
 
-    // function addArcher() external {
-    //     Archer archer = new Archer();
-    //     address archPay = payable(archer);
-    //     units.push(archPay);
-    // }
+    function removeUnit(address _dead) public {
+        for (uint8 j = 0; j < units.length; ++j) {
+            if (units[j] == _dead) {
+                delete units[j];
+            }
+        }
+    }
 
-    // function addWarrior() external {
-    //     Warrior warrior = new Warrior();
-    //     address warPay =payable(warrior);
-    //     units.push(warPay);
-    // }
 
-    function defeat(address _winner) private {
-        for (uint8 i = 0; i < units.length; i++) {
+    function death(address _winner) override public {
+        for (uint8 i = 0; i < units.length; ++i) {
             CombatUnit(units[i]).death(_winner);
         }
         death(_winner);
