@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 
 interface GameObjectInterface {
 
-    function underAttack(uint8 attack) external;
+    function underAttack(int16 attack) external;
 
 }
 

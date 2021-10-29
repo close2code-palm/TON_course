@@ -14,7 +14,7 @@ abstract contract CombatUnit is GameObject {
 
     modifier commandsFromBase {
         require(msg.sender == baseStationAddress, 
-        101, 
+        102, 
         "Only my basestation can command");
         _;
     }
@@ -23,7 +23,9 @@ abstract contract CombatUnit is GameObject {
         return attack;
     }
 
-    function death(address name) commandsFromBase override public {    }
+    function death(address name) commandsFromBase override public {  
+        GameObject(baseStationAddress).removeUnit(address(this));
+    }
 
     function doAttack(address _target) public virtual {
         CombatUnit target = CombatUnit(_target);

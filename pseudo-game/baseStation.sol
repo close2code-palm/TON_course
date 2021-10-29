@@ -16,7 +16,7 @@ contract BaseStation is GameObject {
         units.push(unitAdd);
     }
 
-    function removeUnit(address _dead) public {
+    function removeUnit(address _dead) public override {
         for (uint8 j = 0; j < units.length; ++j) {
             if (units[j] == _dead) {
                 delete units[j];
@@ -30,15 +30,6 @@ contract BaseStation is GameObject {
             CombatUnit(units[i]).death(_winner);
         }
         death(_winner);
-    }
-
-
-    function getDefense() 
-    public
-    view 
-    override
-    returns(uint8 defense_power) {
-        return defense_power;
     }
 
 }

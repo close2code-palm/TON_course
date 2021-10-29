@@ -36,17 +36,25 @@
 			]
 		},
 		{
+			"name": "removeUnit",
+			"inputs": [
+				{"name":"value0","type":"address"}
+			],
+			"outputs": [
+			]
+		},
+		{
 			"name": "getDefense",
 			"inputs": [
 			],
 			"outputs": [
-				{"name":"def","type":"uint8"}
+				{"name":"def","type":"int16"}
 			]
 		},
 		{
 			"name": "underAttack",
 			"inputs": [
-				{"name":"damage","type":"uint8"}
+				{"name":"damage","type":"int16"}
 			],
 			"outputs": [
 			]
@@ -70,7 +78,7 @@
 		{"name":"_pubkey","type":"uint256"},
 		{"name":"_timestamp","type":"uint64"},
 		{"name":"_constructorFlag","type":"bool"},
-		{"name":"lifeCells","type":"uint16"},
+		{"name":"lifeCells","type":"int16"},
 		{"name":"baseStationAddress","type":"address"},
 		{"name":"attack","type":"uint8"}
 	]
