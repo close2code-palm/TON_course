@@ -3,11 +3,12 @@ pragma AbiHeader expire;
 
 import "./gameObject.sol";
 import './combatUnit.sol';
+import './IFieldCleaner.sol';
 
 // import './archer.sol';
 // import './warrior.sol';
 
-contract BaseStation is GameObject {
+contract BaseStation is GameObject, IFieldCleaner {
 
     address[] private units;
 
@@ -16,7 +17,7 @@ contract BaseStation is GameObject {
         units.push(unitAdd);
     }
 
-    function removeUnit(address _dead) public override {
+    function removeCorpse(address _dead) public override {
         for (uint8 j = 0; j < units.length; ++j) {
             if (units[j] == _dead) {
                 delete units[j];

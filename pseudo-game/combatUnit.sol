@@ -2,6 +2,7 @@ pragma ton-solidity >= 0.5.0;
 pragma AbiHeader expire;
 
 import './gameObject.sol';
+import './IFieldCleaner.sol';
 
 abstract contract CombatUnit is GameObject {
 
@@ -24,7 +25,7 @@ abstract contract CombatUnit is GameObject {
     }
 
     function death(address name) commandsFromBase override public {  
-        GameObject(baseStationAddress).removeUnit(address(this));
+        IFieldCleaner(baseStationAddress).removeCorpse(address(this));
     }
 
     function doAttack(address _target) public virtual {
