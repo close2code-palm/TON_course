@@ -28,14 +28,6 @@
 			]
 		},
 		{
-			"name": "removeUnit",
-			"inputs": [
-				{"name":"value0","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
 			"name": "getDefense",
 			"inputs": [
 			],

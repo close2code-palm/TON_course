@@ -20,6 +20,14 @@
 			]
 		},
 		{
+			"name": "struckByUnit",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"attackingCodeHash","type":"uint256"}
+			]
+		},
+		{
 			"name": "death",
 			"inputs": [
 				{"name":"name","type":"address"}
@@ -31,14 +39,6 @@
 			"name": "doAttack",
 			"inputs": [
 				{"name":"_target","type":"address"}
-			],
-			"outputs": [
-			]
-		},
-		{
-			"name": "removeUnit",
-			"inputs": [
-				{"name":"value0","type":"address"}
 			],
 			"outputs": [
 			]

@@ -10,8 +10,6 @@ abstract contract GameObject is GameObjectInterface {
 
     event LoseOne(address owned, address eliminator, uint reward);
 
-    function removeUnit(address) public virtual {}
-
     function getDefense() 
     public 
     virtual 
