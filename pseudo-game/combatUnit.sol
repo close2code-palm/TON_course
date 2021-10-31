@@ -9,9 +9,10 @@ abstract contract CombatUnit is GameObject {
     address internal baseStationAddress;
     uint8 internal attack;
 
-    // constructor(address baseSt) public {
-    //     baseStationAddress = baseSt;
-    // }
+    // this technic makes possible authorization of basestations
+    function struckByUnit() pure public returns(uint attackingCodeHash) {
+        attackingCodeHash = tvm.hash(tvm.code());
+    }
 
     modifier commandsFromBase {
         require(msg.sender == baseStationAddress, 
