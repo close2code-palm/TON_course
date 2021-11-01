@@ -5,8 +5,6 @@ import "./gameObject.sol";
 import './combatUnit.sol';
 import './IFieldCleaner.sol';
 
-// import './archer.sol';
-// import './warrior.sol';
 
 contract BaseStation is GameObject, IFieldCleaner {
 

@@ -21,7 +21,7 @@ abstract contract CombatUnit is GameObject {
         _;
     }
 
-    function getAttack() virtual view public returns (uint8) {
+    function getAttack() view public returns (uint8) {
         return attack;
     }
 

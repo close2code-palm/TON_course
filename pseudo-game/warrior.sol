@@ -17,7 +17,4 @@ contract Warrior is CombatUnit {
         tvm.accept();
     }
 
-    function getAttack() public view override returns (uint8 attackPower) {
-        return attack;
-    } 
 }

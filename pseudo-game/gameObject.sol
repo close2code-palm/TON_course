@@ -23,7 +23,7 @@ abstract contract GameObject is GameObjectInterface {
     /// @param damage is given from caller function
     function underAttack(int16 damage) external override {
         if (damage <= getDefense()) {
-            revert(101, "your attack too weak");
+            revert(101, "your attack is too weak");
         } 
         int16 effectiveDamage = damage - getDefense();
         if (isLethal(lifeCells, effectiveDamage)) {

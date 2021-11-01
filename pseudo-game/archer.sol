@@ -17,11 +17,4 @@ contract Archer is CombatUnit {
         tvm.accept();
     }
 
-    function getAttack() view public override returns (uint8 attackPower) {
-        return attack;
-    }
-
-    // function getDefense() pure override public returns (uint8) {
-    //     return 6;
-    // }
 }
