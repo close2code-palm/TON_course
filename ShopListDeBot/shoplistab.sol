@@ -1,7 +1,6 @@
 abstract contract HasConstructorWithPubKey {
 
     struct ToBuy {
-        uint32 id;
         string naming;
         uint16 amount;
         uint32 addedAt;
@@ -32,7 +31,7 @@ abstract contract HasConstructorWithPubKey {
     }
 
     function addItem(string _naming, uint16 _amount) public {
-        m_tobuys[toBuysCnt] = ToBuy(toBuysCnt, _naming, _amount, now, false, NaN);
+        m_tobuys[toBuysCnt] = ToBuy(_naming, _amount, now, false, NaN);
         ++toBuysCnt;
         tvm.accept();
     }
@@ -56,8 +55,17 @@ abstract contract HasConstructorWithPubKey {
             _creation_t = tobuys.addedAt;
             _bought = tobuys.bought;
             _pricePaid = tobuys.price;
-            l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid));
+            l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid.get()));
         }
         
+    }
+
+    function buy(uint32 _id ,uint128 _price) public {
+        ToBuy buyItem = m_tobuys[_id];
+        require(buyIt.hasValue(), 117, 'No item in list with this id');
+        tvm.accept();
+        buyItem.bought = true;
+        buyItem.price = _price;
+        m_tobuys[_id] = buyItem;
     }
 }
