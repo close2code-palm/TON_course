@@ -1,19 +1,21 @@
-abstract contract HasConstructorWithPubKey {
-
-    struct ToBuy {
+struct ToBuy {
         string naming;
         uint16 amount;
         uint32 addedAt;
         bool bought;
-        optional(uint128) price;
+        uint128 price;
     }
 
-    struct BuysSummary {
-        uint32 paid;
-        uint32 unpaid;
-        uint totalPrice;    
-    }
+struct BuysSummary {
+    uint32 paid;
+    uint32 notPaid;
+    uint totalPrice;    
+}
 
+
+abstract contract HasConstructorWithPubKey {
+
+    
     mapping (uint32=>ToBuy) m_tobuys;
     uint32 toBuysCnt;
     uint m_ownerPubkey;
@@ -31,7 +33,7 @@ abstract contract HasConstructorWithPubKey {
     }
 
     function addItem(string _naming, uint16 _amount) public {
-        m_tobuys[toBuysCnt] = ToBuy(_naming, _amount, now, false, NaN);
+        m_tobuys[toBuysCnt] = ToBuy(_naming, _amount, now, false, 0);
         ++toBuysCnt;
         tvm.accept();
     }
@@ -47,7 +49,7 @@ abstract contract HasConstructorWithPubKey {
         uint16 _amount;
         uint32 _creation_t;
         bool _bought;
-        optional(uint128) _pricePaid;
+        uint128 _pricePaid;
 
         for ((uint32 _iid, ToBuy tobuys) : m_tobuys) {
             _naming = tobuys.naming;
@@ -55,7 +57,7 @@ abstract contract HasConstructorWithPubKey {
             _creation_t = tobuys.addedAt;
             _bought = tobuys.bought;
             _pricePaid = tobuys.price;
-            l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid.get()));
+            l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid));
         }
         
     }
@@ -67,5 +69,17 @@ abstract contract HasConstructorWithPubKey {
         buyItem.bought = true;
         buyItem.price = _price;
         m_tobuys[_id] = buyItem;
+    }
+
+    function purchStats() public returns(BuysSummary purchStats) {
+        purchStats = BuysSummary(0,0,0);
+        for ((uint32 id, ToBuy tl_tobuys) : m_tobuys) {
+            if (tl_tobuys.bought = true) {
+                ++purchStats.paid;
+                purchStats.totalPrice += tl_tobuys.price;
+            } else {
+                ++purchStats.notPaid;
+            }
+        }
     }
 }
