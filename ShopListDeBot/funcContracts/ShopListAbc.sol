@@ -12,6 +12,15 @@ struct BuysSummary {
     uint totalPrice;    
 }
 
+struct ToBuy_l {
+        uint32 id;
+        string naming;
+        uint16 amount;
+        uint32 addedAt;
+        bool bought;
+        uint128 price;
+}
+
 
 abstract contract HasConstructorWithPubKey {
 
@@ -44,7 +53,7 @@ abstract contract HasConstructorWithPubKey {
         delete tobuys(_id);
     }
 
-    function getList() view public returns (ToBuy[] l_tobuy) {
+    function getList() view public returns (ToBuy_l[] l_tobuy) {
         string _naming;
         uint16 _amount;
         uint32 _creation_t;
@@ -52,12 +61,15 @@ abstract contract HasConstructorWithPubKey {
         uint128 _pricePaid;
 
         for ((uint32 _iid, ToBuy tobuys) : m_tobuys) {
-            _naming = tobuys.naming;
-            _amount = tobuys.amount;
-            _creation_t = tobuys.addedAt;
-            _bought = tobuys.bought;
-            _pricePaid = tobuys.price;
-            l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid));
+
+            ToBuy_l tbli = (_iid, tobuys.unpack()); 
+            // _naming = tobuys.naming;
+            // _amount = tobuys.amount;
+            // _creation_t = tobuys.addedAt;
+            // _bought = tobuys.bought;
+            // _pricePaid = tobuys.price;
+            // l_tobuy.push(ToBuy(iid, _naming, _amount, _creation_t, _bought, _pricePaid));
+            l_tobuy.push(tbli);
         }
         
     }
