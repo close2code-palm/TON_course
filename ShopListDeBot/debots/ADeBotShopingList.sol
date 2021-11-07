@@ -11,16 +11,13 @@ interface IMsig {
     function sendTransaction(address dest, uint128 value, bool bounce, uint8 flags, TvmCell payload  ) external;
 }
 
-interface IShopList {
-    function deleteItem(uint32 _id) external;
-    function getList() external returns(ToBuy_l[] l_tobuy);
-    function purchStat() external returns(BuysSummary purchStat);
-}
 
 abstract contract ADeBotShopingList is Debot {
 
+    address deployAddress;
     TvmCell listCode;
     uint32 INITIAL_BALANCE = 100000000;
+    uint256 masterPubKey;
 
     function setListCode(TvmCell _code) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
@@ -31,6 +28,7 @@ abstract contract ADeBotShopingList is Debot {
     function savePubKey(string _pubk) public {
         (uint hKey, bool status) = stoi("0x" + _pubk);
         if (status) {
+            masterPubKey = hKey;
             Terminal.print(0, "Checking for existing lists...");
             TvmCell deployState = tvm.insertPubkey(listCode, hKey);
             deployAddress = address.makeAddrStd(0, tvm.hash(deployState));
