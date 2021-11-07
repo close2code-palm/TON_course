@@ -3,5 +3,7 @@ interface Transactable {
 }
 
 interface IPurchaseList {
+
+    func
     
 }
