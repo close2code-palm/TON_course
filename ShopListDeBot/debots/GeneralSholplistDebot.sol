@@ -1,3 +1,8 @@
+pragma ton-solidity >= 0.35.0;
+pragma AbiHeader time;
+pragma AbiHeader expire;
+
+import '../funcContracts/ShopListStructures.sol';
 
 interface IShopList {
     function deleteItem(uint32 _id) external;
@@ -11,30 +16,29 @@ contract ShopDebot is ADeBotShopingList {
         optional(uint256) pubkey = 0;
         ITodo(m_address).deleteTask{
                 abiVer: 2,
-                extMsg: true,
                 sign: true,
                 pubkey: pubkey,
                 time: uint64(now),
                 expire: 0,
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
-            }(uint32(num));
+            }(uint32(num)).extMsg;
     }
 
     function getList_() public view {
         optional(uint256) none;
         ITodo(m_address).getList{
             abiVer: 2,
-            extMsg: true,
             sign: false,
             pubkey: none,
             time: uint64(now),
             expire: 0,
             callbackId: tvm.functionId(getList__),
             onErrorId: 0
-        }();
+        }().extMsg;
+    }
 
-    function getList__( ToBuy_l[]  l_tobuy) public {
+    function getList__(ToBuy_l[]  l_tobuy) public {
         uint32 i;
         if (tasks.length > 0 ) {
             Terminal.print(0, "Your tasks list:");
@@ -46,7 +50,7 @@ contract ShopDebot is ADeBotShopingList {
                 } else {
                     bought = ' ';
                 }
-                Terminal.print(0, format("{} {}  \"{}\"  at {}", itobuy.id, bought, itobuy.naming, itobuy.addedAt));
+                Terminal.print(0, format("{} {}  \"{}\"  at {}", itobuy.id, bought, itobuy.naming, itobuy.addedAt)); // bugy formating
             }
         } else {
             Terminal.print(0, "Your tasks list is empty");
@@ -58,12 +62,12 @@ contract ShopDebot is ADeBotShopingList {
         optional(uint256) none;
         ITodo(m_address).purchStat{
             abiVer: 2,
-            extMsg: true,
             sign: false,
             pubkey: none,
             time: uint64(now),
             expire: 0,
             callbackId: answerId,
             onErrorId: 0
-        }();
+        }().extMsg;
+    }
 }
