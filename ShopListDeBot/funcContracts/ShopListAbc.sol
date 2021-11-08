@@ -1,3 +1,5 @@
+pragma ton-solidity >= 0.40.0;
+
 struct ToBuy {
         uint32 id;
         string naming;
@@ -16,8 +18,11 @@ struct BuysSummary {
 
 abstract contract HasConstructorWithPubKey {
 
+    
+    uint m_ownerPubkey;
+
     constructor(uint _pubkey) public { 
-        require(pubkey != 0, 120);
+        require(_pubkey != 0, 120);
         tvm.accept();
         m_ownerPubkey = _pubkey;
     }

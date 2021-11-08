@@ -9,7 +9,6 @@ contract ShopList is HasConstructorWithPubKey  {
     
     mapping (uint32=>ToBuy) m_tobuys;
     uint32 toBuysCnt;
-    uint m_ownerPubkey;
 
 
     modifier onlyOwner() {
