@@ -14,7 +14,7 @@ contract ShopDebot is ADeBotShopingList {
     function deleteItem(string value) public view {
         (uint256 num,) = stoi(value);
         optional(uint256) pubkey = 0;
-        ITodo(m_address).deleteTask{
+        ITodo(m_address).deleteItem{
                 abiVer: 2,
                 sign: true,
                 pubkey: pubkey,
@@ -40,7 +40,7 @@ contract ShopDebot is ADeBotShopingList {
 
     function getList__(ToBuy_l[]  l_tobuy) public {
         uint32 i;
-        if (tasks.length > 0 ) {
+        if (l_tobuy.length > 0 ) {
             Terminal.print(0, "Your tasks list:");
             for (i = 0; i < l_tobuy.length; i++) {
                 ToBuy_l itobuy = l_tobuy[i];
@@ -66,8 +66,16 @@ contract ShopDebot is ADeBotShopingList {
             pubkey: none,
             time: uint64(now),
             expire: 0,
-            callbackId: answerId,
+            callbackId: tvm.functionId(onSuccess),
             onErrorId: 0
         }().extMsg;
+    }
+
+    function _menu() private {
+        Menu.select("General shoplist options", "", [
+            MenuItem("Delete item", "", tvm.functionId(deleteItem)),
+            MenuItem("Get info about all items", "", tvm.functionId(getList)),
+            MenuItem("Statisctics on your purchases", "", tvm.functionId(purchStat))
+        ]);
     }
 }

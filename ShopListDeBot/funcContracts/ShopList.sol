@@ -4,6 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 
 import './ShopListAbc.sol';
+import './ShopListStructures.sol';
 
 contract ShopList is HasConstructorWithPubKey  {
     

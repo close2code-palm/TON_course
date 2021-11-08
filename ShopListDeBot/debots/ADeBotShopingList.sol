@@ -33,6 +33,8 @@ abstract contract ADeBotShopingList is Debot {
         Terminal.input(tvm.functionId(savePubKey), "Enter your pubic key: ", false);
     }
 
+    function _menu() virtual  internal {}
+
     function savePubKey(string _pubk) public {
         (uint hKey, bool status) = stoi("0x" + _pubk);
         if (status) {
@@ -40,7 +42,7 @@ abstract contract ADeBotShopingList is Debot {
             Terminal.print(0, "Checking for existing lists...");
             TvmCell deployState = tvm.insertPubkey(listCode, hKey);
             deployAddress = address.makeAddrStd(0, tvm.hash(deployState));
-            Terminal.print(0, format("Your list contract address is {}"), deployAddress);
+            Terminal.print(0, format("Your list contract address is {}", deployAddress));
             Sdk.getAccountType(tvm.functionId(checkStatus), deployAddress);
         } else {
             Terminal.input(tvm.functionId(savePubKey), "Wrong public key. Enter public key again!", false);
@@ -78,7 +80,7 @@ function checkStatus(int8 acc_type) public {
         if (acc_type == 1) { // acc is active and  contract is already deployed
             Terminal.print(0, format("You have shoplist allready at {}.", deployAddress));
         } else if (acc_type == -1)  { // acc is inactive
-            Terminal.print(0, "You don't have a TODO list yet, so a new contract with an initial balance of 0.2 tokens will be deployed");
+            Terminal.print(0, "You don't have a TODO list yet, so a new contract with an initial balance of 0.1 tokens will be deployed");
             AddressInput.get(tvm.functionId(creditAccount),"Select a wallet for payment. We will ask you to sign two transactions");
         } else  if (acc_type == 0) { // acc is uninitialized
             Terminal.print(0, format(
@@ -128,5 +130,6 @@ function checkStatus(int8 acc_type) public {
 
     function onSuccess() public view {
         Terminal.print(0, "Keep on going.");
+        _menu();
     }
 }
