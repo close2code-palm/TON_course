@@ -1,17 +1,18 @@
-import 'ADeBotShopingList.sol';
+pragma ton-solidity >= 0.40.0;
 
+import 'ADeBotShopingList.sol';
 
 
 interface IShopping {
     function buy(uint32 _id, uint128 _price) external;
 }
 
-contract ShopingDebot {
+contract ShopingDebot is ADeBotShopingList {
 
     uint32 private buy_id;
 
-    function _menu() internal {
-        Terminal.input(tvm.functionId(buy), "Enter id of purchase.", false);
+    function _menu() internal override {
+        Terminal.input(tvm.functionId(buy__), "Enter id of purchase.", false);
     }
 
     function buy__(uint32 _iid) private {

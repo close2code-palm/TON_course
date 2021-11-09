@@ -23,7 +23,7 @@ abstract contract ADeBotShopingList is Debot {
     uint256 masterPubKey;
     address masterWallet;
 
-    function _menu() virtual internal;
+    function _menu() virtual internal {}
 
     function setListCode(TvmCell _code) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
@@ -35,7 +35,6 @@ abstract contract ADeBotShopingList is Debot {
         Terminal.input(tvm.functionId(savePubKey), "Enter your pubic key: ", false);
     }
 
-    // function _menu() virtual internal {}
 
     function savePubKey(string _pubk) public {
         (uint hKey, bool status) = stoi("0x" + _pubk);

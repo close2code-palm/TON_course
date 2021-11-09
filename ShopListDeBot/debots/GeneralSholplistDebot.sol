@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.35.0;
+pragma ton-solidity >= 0.40.0;
 
 
 pragma AbiHeader time;
@@ -6,18 +6,19 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 import '../funcContracts/ShopListStructures.sol';
+import './ADeBotShopingList.sol';
 
 interface IShopList {
     function deleteItem(uint32 _id) external;
-    function getList() external returns(ToBuy_l[] l_tobuy);
-    function purchStat() external returns(BuysSummary purchStat);
+    function getList() external returns(ToBuy[] l_tobuy);
+    function purchStat() external returns(BuysSummary allPurchStat);
 }
 
 contract ShopDebot is ADeBotShopingList {
     function deleteItem(string value) public view {
         (uint256 num,) = stoi(value);
         optional(uint256) pubkey = 0;
-        ITodo(m_address).deleteItem{
+        IShopList(deployAddress).deleteItem{
                 abiVer: 2,
                 sign: true,
                 pubkey: pubkey,
@@ -30,7 +31,7 @@ contract ShopDebot is ADeBotShopingList {
 
     function getList_() public view {
         optional(uint256) none;
-        ITodo(m_address).getList{
+        IShopList(deployAddress).getList{
             abiVer: 2,
             sign: false,
             pubkey: none,
@@ -41,12 +42,12 @@ contract ShopDebot is ADeBotShopingList {
         }().extMsg;
     }
 
-    function getList__(ToBuy_l[]  l_tobuy) public {
+    function getList__(ToBuy[]  l_tobuy) public {
         uint32 i;
         if (l_tobuy.length > 0 ) {
             Terminal.print(0, "Your tasks list:");
             for (i = 0; i < l_tobuy.length; i++) {
-                ToBuy_l itobuy = l_tobuy[i];
+                ToBuy itobuy = l_tobuy[i];
                 string bought;
                 if (itobuy.bought) {
                     bought = itobuy.price;
@@ -63,7 +64,7 @@ contract ShopDebot is ADeBotShopingList {
 
     function _purchStat(uint32 answerId) private view {
         optional(uint256) none;
-        ITodo(m_address).purchStat{
+        IShopList(deployAddress).allPurchStat{
             abiVer: 2,
             sign: false,
             pubkey: none,
