@@ -1,6 +1,9 @@
 pragma ton-solidity >= 0.35.0;
+
+
 pragma AbiHeader time;
 pragma AbiHeader expire;
+pragma AbiHeader pubkey;
 
 import '../funcContracts/ShopListStructures.sol';
 

@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.5.0;
+pragma ton-solidity <= 0.51.0;
 
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -23,6 +23,8 @@ abstract contract ADeBotShopingList is Debot {
     uint256 masterPubKey;
     address masterWallet;
 
+    function _menu() virtual internal;
+
     function setListCode(TvmCell _code) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
         tvm.accept();
@@ -33,7 +35,7 @@ abstract contract ADeBotShopingList is Debot {
         Terminal.input(tvm.functionId(savePubKey), "Enter your pubic key: ", false);
     }
 
-    function _menu() virtual  internal {}
+    // function _menu() virtual internal {}
 
     function savePubKey(string _pubk) public {
         (uint hKey, bool status) = stoi("0x" + _pubk);
@@ -43,7 +45,7 @@ abstract contract ADeBotShopingList is Debot {
             TvmCell deployState = tvm.insertPubkey(listCode, hKey);
             deployAddress = address.makeAddrStd(0, tvm.hash(deployState));
             Terminal.print(0, format("Your list contract address is {}", deployAddress));
-            Sdk.getAccountType(tvm.functionId(checkStatus), deployAddress);
+            Sdk.getAccountType(tvm.functionId(accStatusBranching), deployAddress);
         } else {
             Terminal.input(tvm.functionId(savePubKey), "Wrong public key. Enter public key again!", false);
         }
@@ -76,7 +78,7 @@ abstract contract ADeBotShopingList is Debot {
         Sdk.getAccountType(tvm.functionId(checkIfStatusIs0), masterWallet);
     }
 
-function checkStatus(int8 acc_type) public {
+    function accStatusBranching(int8 acc_type) public {
         if (acc_type == 1) { // acc is active and  contract is already deployed
             Terminal.print(0, format("You have shoplist allready at {}.", deployAddress));
         } else if (acc_type == -1)  { // acc is inactive
@@ -118,17 +120,19 @@ function checkStatus(int8 acc_type) public {
             tvm.sendrawmsg(deployMsg, 1);
     }
 
+    function onError(uint32 sdkError, uint32 exitCode) public {
+        Terminal.print(0, format("Operation failed. sdkError {}, exitCode {}", sdkError, exitCode));
+        _menu();
+    }
 
-
-
-    function onErrorRepeatDeploy(uint32 sdkError, uint32 exitCode) public view {
+    function onErrorRepeatDeploy(uint32 sdkError, uint32 exitCode) public {
         // TODO: check errors if needed.
         sdkError;
         exitCode;
         deploy();
     }
 
-    function onSuccess() public view {
+    function onSuccess() public {
         Terminal.print(0, "Keep on going.");
         _menu();
     }

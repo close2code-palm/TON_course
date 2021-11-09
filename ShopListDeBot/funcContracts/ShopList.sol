@@ -1,13 +1,19 @@
-pragma ton-solidity >= 0.5.0;
+pragma ton-solidity >= 0.40.0;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
 pragma AbiHeader time;
 
 import './ShopListAbc.sol';
-import './ShopListStructures.sol';
+
 
 contract ShopList is HasConstructorWithPubKey  {
     
+    constructor(uint _pubkey) public override { 
+        require(_pubkey != 0, 120);
+        tvm.accept();
+        m_ownerPubkey = _pubkey;
+    }
+
     mapping (uint32=>ToBuy) m_tobuys;
     uint32 toBuysCnt;
 
@@ -24,12 +30,12 @@ contract ShopList is HasConstructorWithPubKey  {
     }
 
     function deleteItem(uint32 _id) public {
-        require(tobuys.exists(_id), 111, 'Not found.');
+        require(m_tobuys.exists(_id), 111, 'Not found.');
         tvm.accept();
-        delete tobuys(_id);
+        delete m_tobuys(_id);
     }
 
-    function getList() view public returns (ToBuy_l[] l_tobuy) {
+    function getList() view public returns (ToBuy[] l_tobuy) {
 
         for ((uint32 _iid, ToBuy tobuys) : m_tobuys) {
             l_tobuy.push(tobuys);
@@ -39,7 +45,7 @@ contract ShopList is HasConstructorWithPubKey  {
 
     function buy(uint32 _id ,uint128 _price) public {
         ToBuy buyItem = m_tobuys[_id];
-        require(buyIt.hasValue(), 117, 'No item in list with this id');
+        require(buyItem.hasValue(), 117, 'No item in list with this id');
         tvm.accept();
         buyItem.bought = true;
         buyItem.price = _price;

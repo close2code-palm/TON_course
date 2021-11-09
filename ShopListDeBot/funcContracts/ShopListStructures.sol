@@ -1,3 +1,5 @@
+pragma ton-solidity >= 0.40.0;
+
 struct ToBuy {
         uint32 id;
         string naming;

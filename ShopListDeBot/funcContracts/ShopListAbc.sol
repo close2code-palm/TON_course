@@ -18,12 +18,7 @@ struct BuysSummary {
 
 abstract contract HasConstructorWithPubKey {
 
-    
-    uint m_ownerPubkey;
+    uint internal m_ownerPubkey;
 
-    constructor(uint _pubkey) public { 
-        require(_pubkey != 0, 120);
-        tvm.accept();
-        m_ownerPubkey = _pubkey;
-    }
+    constructor(uint _pubkey) virtual public {}
 }
