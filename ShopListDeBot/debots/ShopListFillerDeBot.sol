@@ -4,10 +4,15 @@ pragma AbiHeader time;
 import './ADeBotShopingList.sol';
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/ConfirmInput/ConfirmInput.sol";
 
+/// @notice abstraction to call addItem from undergoing contract
 interface IFiller {
     function addItem(string _naming, uint16 _amount) external;
 }
 
+/// @title ListFilling 'state' of shoplist debot series
+/// @author Juriax Golesshikov
+/// @notice Explain to an end user what this does
+/// @dev Explain to a developer any extra details
 contract ShopListFillerDeBot is ADeBotShopingList {
 
     string private add_naming;

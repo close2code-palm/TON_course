@@ -7,7 +7,8 @@ pragma AbiHeader time;
 import './ShopListAbc.sol';
 import './ShopListStructures.sol';
 
-
+/// @title Is a single-deployable shoplist
+/// @author Juriax Golesshikov
 contract ShopList  {
     
     uint ownerPubkey;
@@ -27,12 +28,16 @@ contract ShopList  {
         _;
     }
 
+/// @notice adding item to mapping 
+/// @dev counter from 0  
+/// @param _amount quantity in standard units for the subject
     function addItem(string _naming, uint16 _amount) public {
         m_tobuys[toBuysCnt] = ToBuy(toBuysCnt ,_naming, _amount, now, false, 0);
         ++toBuysCnt;
         tvm.accept();
     }
 
+/// @dev counter makes mapping sparse after delete
     function deleteItem(uint32 _id) public {
         require(m_tobuys.exists(_id), 111, 'Not found.');
         tvm.accept();
@@ -47,6 +52,8 @@ contract ShopList  {
         
     }
 
+/// @notice switches default bought flag to true and sets price for introduced amount of item
+/// @param _id is checked and throws if it doenst exists
     function buy(uint32 _id ,uint128 _price) public {
         optional(ToBuy) o_buyItem = m_tobuys[_id];
         require(o_buyItem.hasValue(), 117, 'No item in list with this id');
@@ -58,7 +65,7 @@ contract ShopList  {
     }
 
     function purchStat() public returns(BuysSummary purchStats) {
-        purchStats = BuysSummary(0,0,0);
+        purchStats = BuysSummary(0,0,0); // do I need it?
         for ((uint32 id, ToBuy tl_tobuys) : m_tobuys) {
             if (tl_tobuys.bought = true) {
                 ++purchStats.paid;

@@ -23,6 +23,7 @@ abstract contract ADeBotShopingList is Debot {
     uint256 masterPubKey;
     address masterWallet;
 
+/// @notice point atfter list init, represents uer possibilitie
     function _menu() virtual internal {}
 
     function setListCode(TvmCell _code) public {
@@ -31,6 +32,7 @@ abstract contract ADeBotShopingList is Debot {
         listCode = _code;
     }
 
+/// @notice any interaction with debot starts here
     function start() public override {
         Terminal.input(tvm.functionId(savePubKey), "Enter your pubic key: ", false);
     }
@@ -74,7 +76,7 @@ abstract contract ADeBotShopingList is Debot {
     }
 
     function waitBeforeDeploy() public  {
-        Sdk.getAccountType(tvm.functionId(checkIfStatusIs0), masterWallet);
+        Sdk.getAccountType(tvm.functionId(deployIf0rwait), masterWallet);
     }
 
     function accStatusBranching(int8 acc_type) public {
@@ -93,7 +95,7 @@ abstract contract ADeBotShopingList is Debot {
         }
     }
 
-    function checkIfStatusIs0(int8 acc_type) public {
+    function deployIf0rwait(int8 acc_type) public {
         if (acc_type ==  0) {
             deploy();
         } else {
