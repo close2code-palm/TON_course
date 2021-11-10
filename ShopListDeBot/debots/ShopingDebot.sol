@@ -9,18 +9,20 @@ interface IShopping {
 
 contract ShopingDebot is ADeBotShopingList {
 
+
     uint32 private buy_id;
+    
 
     function _menu() internal override {
         Terminal.input(tvm.functionId(buy__), "Enter id of purchase.", false);
     }
 
-    function buy__(uint32 _iid) private {
+    function buy__(uint32 _iid) public {
         buy_id = _iid;
         Terminal.input(tvm.functionId(buy__f), "Enter the price you paid.", false);
     }
 
-    function buy__f(uint128 price) private {
+    function buy__f(uint128 price) public {
         optional(uint) pubkey = 0;
         IShopping(deployAddress).buy{
             abiVer: 2,

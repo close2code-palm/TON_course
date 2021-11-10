@@ -135,4 +135,25 @@ abstract contract ADeBotShopingList is Debot {
         Terminal.print(0, "Keep on going.");
         _menu();
     }
+
+    function getDebotInfo() public functionID(0xDEB) override view returns(
+        string name, string version, string publisher, string key, string author,
+        address support, string hello, string language, string dabi, bytes icon
+    ) {
+        name = "Shopman Debot";
+        version = "0.0.1";
+        publisher = "Juriax Golesshikov";
+        key = "Intuitive control";
+        author = "Juriax Golesshikov";
+        support = address.makeAddrStd(0, 0x000000000000000000000000000000000000000000000000000000000000);
+        hello = "Hello, let's shop.";
+        language = "en";
+        dabi = m_debotAbi.get();
+        icon = '';
+    }
+    
+    function getRequiredInterfaces() public view override returns (uint256[] interfaces) {
+        return [ Terminal.ID, Sdk.ID, AddressInput.ID ];
+    }
+    
 }
