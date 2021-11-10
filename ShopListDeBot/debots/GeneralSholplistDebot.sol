@@ -48,13 +48,13 @@ contract ShopDebot is ADeBotShopingList {
             Terminal.print(0, "Your tasks list:");
             for (i = 0; i < l_tobuy.length; i++) {
                 ToBuy itobuy = l_tobuy[i];
-                string bought;
+                string _bought;
                 if (itobuy.bought) {
-                    bought = itobuy.price;
+                    _bought = '✓';
                 } else {
-                    bought = ' ';
+                    _bought ='x';
                 }
-                Terminal.print(0, format("{} {}  \"{}\"  at {}", itobuy.id, bought, itobuy.naming, itobuy.addedAt)); // bugy formating
+            Terminal.print(0, format("{} {} {}  \"{}\"  at {}", itobuy.id, _bought, itobuy.price, itobuy.naming, itobuy.addedAt));
             }
         } else {
             Terminal.print(0, "Your tasks list is empty");
@@ -62,9 +62,9 @@ contract ShopDebot is ADeBotShopingList {
         _menu();
     }
 
-    function _purchStat(uint32 answerId) private view {
+    function _purchStat(uint32 answerId) public view {
         optional(uint256) none;
-        IShopList(deployAddress).allPurchStat{
+        IShopList(deployAddress).purchStat{
             abiVer: 2,
             sign: false,
             pubkey: none,
@@ -75,11 +75,11 @@ contract ShopDebot is ADeBotShopingList {
         }().extMsg;
     }
 
-    function _menu() private {
+    function _menu() override internal {
         Menu.select("General shoplist options", "", [
             MenuItem("Delete item", "", tvm.functionId(deleteItem)),
-            MenuItem("Get info about all items", "", tvm.functionId(getList)),
-            MenuItem("Statisctics on your purchases", "", tvm.functionId(purchStat))
+            MenuItem("Get info about all items", "", tvm.functionId(getList_)),
+            MenuItem("Statisctics on your purchases", "", tvm.functionId(_purchStat))
         ]);
     }
 }
