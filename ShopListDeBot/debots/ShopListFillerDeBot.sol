@@ -1,5 +1,7 @@
 pragma ton-solidity >= 0.51.0;
 pragma AbiHeader time;
+pragma AbiHeader pubkey;
+pragma AbiHeader expire;
 
 import './ADeBotShopingList.sol';
 import "https://raw.githubusercontent.com/tonlabs/DeBot-IS-consortium/main/ConfirmInput/ConfirmInput.sol";
