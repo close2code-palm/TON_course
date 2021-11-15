@@ -30,7 +30,8 @@ contract ShopDebot is ADeBotShopingList {
             }(uint32(num));
     }
 
-    function getList_() public view {
+    function getList_(uint32 index) public view {
+        index = index;
         optional(uint256) none;
         IShopList(deployAddress).getList{
             abiVer: 2,
@@ -64,7 +65,8 @@ contract ShopDebot is ADeBotShopingList {
         _menu();
     }
 
-    function _purchStat(uint32 answerId) public view {
+    function _purchStat(uint32 index) public view {
+        index = index;
         optional(uint256) none;
         IShopList(deployAddress).purchStat{
             abiVer: 2,

@@ -22,12 +22,12 @@ contract ShopingDebot is ADeBotShopingList {
         Terminal.input(tvm.functionId(buy__), "Enter id of purchase.", false);
     }
 
-    function buy__(uint32 _iid) public {
-        buy_id = _iid;
+    function buy__(uint32 value) public {
+        buy_id = value;
         Terminal.input(tvm.functionId(buy__f), "Enter the price you paid.", false);
     }
 
-    function buy__f(uint128 price) public {
+    function buy__f(uint128 value) public {
         optional(uint) pubkey = 0;
         IShopping(deployAddress).buy{
             abiVer: 2,
@@ -38,6 +38,6 @@ contract ShopingDebot is ADeBotShopingList {
             expire: 0,
             callbackId: tvm.functionId(onSuccess),
             onErrorId: tvm.functionId(onError)
-        }(buy_id, price);
+        }(buy_id, value);
     }
 }

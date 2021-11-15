@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.51.0;
+pragma ton-solidity >= 0.47.0;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -23,12 +23,12 @@ contract ShopListFillerDeBot is ADeBotShopingList {
         Terminal.input(tvm.functionId(addItem_), "Enter item's name:", false);
     }
 
-    function addItem_(string naming_) public {
-        add_naming = naming_;
+    function addItem_(string value) public {
+        add_naming = value;
         ConfirmInput.get(tvm.functionId(addItem__), "How much is needed?");
     }
 
-    function addItem__(uint16 amount_) public {
+    function addItem__(uint16 value) public {
         optional(uint256) pubkey = 0;
         IFiller(deployAddress).addItem{
             abiVer:2,
@@ -40,7 +40,7 @@ contract ShopListFillerDeBot is ADeBotShopingList {
             callbackId: tvm.functionId(onSuccess),
             onErrorId: tvm.functionId(onError)
         }(add_naming, 
-        amount_);
+        value);
     }
 
     function _menu() internal override {

@@ -1,4 +1,4 @@
-pragma ton-solidity <= 0.51.0;
+pragma ton-solidity <= 0.47.0;
 
 pragma AbiHeader pubkey;
 pragma AbiHeader expire;
@@ -23,14 +23,16 @@ abstract contract ADeBotShopingList is Debot {
     uint32 INITIAL_BALANCE = 100000000;
     uint256 masterPubKey;
     address masterWallet;
+    TvmCell slInitState;
 
 /// @notice point atfter list init, represents uer possibilitie
     function _menu() virtual internal {}
 
-    function setListCode(TvmCell code) public {
+    function setListCode(TvmCell code, TvmCell data) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
         tvm.accept();
         listCode = code;
+        slInitState = tvm.buildStateInit(code, data);
     }
 
 /// @notice any interaction with debot starts here
@@ -39,12 +41,13 @@ abstract contract ADeBotShopingList is Debot {
     }
 
 
-    function savePubKey(string _pubk) public {
-        (uint hKey, bool status) = stoi("0x" + _pubk);
+    function savePubKey(string value) public {
+        (uint hKey, bool status) = stoi("0x" + value);
         if (status) {
             masterPubKey = hKey;
             Terminal.print(0, "Checking for existing lists...");
-            TvmCell deployState = tvm.insertPubkey(listCode, hKey);
+            // TvmCell deployState = tvm.insertPubkey(listCode, hKey);
+            TvmCell deployState = tvm.insertPubkey(slInitState, hKey);
             deployAddress = address.makeAddrStd(0, tvm.hash(deployState));
             Terminal.print(0, format("Your list contract address is {}", deployAddress));
             Sdk.getAccountType(tvm.functionId(accStatusBranching), deployAddress);
@@ -105,7 +108,7 @@ abstract contract ADeBotShopingList is Debot {
     }
 
     function deploy() private view {
-            TvmCell image = tvm.insertPubkey(listCode, masterPubKey);
+            TvmCell image = tvm.insertPubkey(slInitState, masterPubKey);
             optional(uint256) none;
             TvmCell deployMsg = tvm.buildExtMsg({
                 abiVer: 2,
