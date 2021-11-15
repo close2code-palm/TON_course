@@ -32,6 +32,7 @@ contract ShopListFillerDeBot is ADeBotShopingList {
         optional(uint256) pubkey = 0;
         IFiller(deployAddress).addItem{
             abiVer:2,
+            extMsg: true,
             sign: true,
             pubkey: pubkey,
             time: uint64(now),
@@ -39,7 +40,7 @@ contract ShopListFillerDeBot is ADeBotShopingList {
             callbackId: tvm.functionId(onSuccess),
             onErrorId: tvm.functionId(onError)
         }(add_naming, 
-        amount_).extMsg;
+        amount_);
     }
 
     function _menu() internal override {

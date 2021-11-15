@@ -31,12 +31,13 @@ contract ShopingDebot is ADeBotShopingList {
         optional(uint) pubkey = 0;
         IShopping(deployAddress).buy{
             abiVer: 2,
+            extMsg: true,
             sign: true,
             pubkey: pubkey,
             time: uint64(now),
             expire: 0,
             callbackId: tvm.functionId(onSuccess),
             onErrorId: tvm.functionId(onError)
-        }(buy_id, price).extMsg;
+        }(buy_id, price);
     }
 }

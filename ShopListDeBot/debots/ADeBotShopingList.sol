@@ -27,10 +27,10 @@ abstract contract ADeBotShopingList is Debot {
 /// @notice point atfter list init, represents uer possibilitie
     function _menu() virtual internal {}
 
-    function setListCode(TvmCell _code) public {
+    function setListCode(TvmCell code) public {
         require(msg.pubkey() == tvm.pubkey(), 101);
         tvm.accept();
-        listCode = _code;
+        listCode = code;
     }
 
 /// @notice any interaction with debot starts here
@@ -59,18 +59,18 @@ abstract contract ADeBotShopingList is Debot {
         TvmCell empty;
         IMsig(masterWallet).sendTransaction{
             abiVer: 2,
+            extMsg: true,
             sign: true,
             pubkey: pubkey,
             time: uint64(now),
             expire: 0,
             callbackId: tvm.functionId(waitBeforeDeploy),
             onErrorId: tvm.functionId(onErrorRepeatCredit)  // Just repeat if something went wrong
-        }(masterWallet, INITIAL_BALANCE, false, 3, empty).extMsg;
+        }(masterWallet, INITIAL_BALANCE, false, 3, empty);
     }
 
 
     function onErrorRepeatCredit(uint32 sdkError, uint32 exitCode) public {
-        // TODO: check errors if needed.
         sdkError;
         exitCode;
         creditAccount(masterWallet);

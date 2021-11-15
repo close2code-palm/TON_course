@@ -20,26 +20,28 @@ contract ShopDebot is ADeBotShopingList {
         optional(uint256) pubkey = 0;
         IShopList(deployAddress).deleteItem{
                 abiVer: 2,
+                extMsg: true,
                 sign: true,
                 pubkey: pubkey,
                 time: uint64(now),
                 expire: 0,
                 callbackId: tvm.functionId(onSuccess),
                 onErrorId: tvm.functionId(onError)
-            }(uint32(num)).extMsg;
+            }(uint32(num));
     }
 
     function getList_() public view {
         optional(uint256) none;
         IShopList(deployAddress).getList{
             abiVer: 2,
+            extMsg: true,
             sign: false,
             pubkey: none,
             time: uint64(now),
             expire: 0,
             callbackId: tvm.functionId(getList__),
             onErrorId: 0
-        }().extMsg;
+        }();
     }
 
     function getList__(ToBuy[]  l_tobuy) public {
@@ -66,13 +68,14 @@ contract ShopDebot is ADeBotShopingList {
         optional(uint256) none;
         IShopList(deployAddress).purchStat{
             abiVer: 2,
+            extMsg: true,
             sign: false,
             pubkey: none,
             time: uint64(now),
             expire: 0,
             callbackId: tvm.functionId(onSuccess),
             onErrorId: 0
-        }().extMsg;
+        }();
     }
 
     function _menu() override internal {
